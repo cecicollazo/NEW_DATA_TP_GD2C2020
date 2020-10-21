@@ -191,7 +191,7 @@ AS
 
 		INSERT INTO new_data.cliente
 		SELECT DISTINCT FAC_CLIENTE_APELLIDO, FAC_CLIENTE_NOMBRE, FAC_CLIENTE_DIRECCION, FAC_CLIENTE_DNI, FAC_CLIENTE_FECHA_NAC,
-						FAC_CLIENTE_MAIL
+				FAC_CLIENTE_MAIL
 		FROM gd_esquema.Maestra
 		WHERE FAC_CLIENTE_DNI IS NOT NULL AND FAC_CLIENTE_DNI NOT IN (SELECT cliente_DNI FROM new_data.cliente)
 
@@ -204,21 +204,21 @@ AS
 		
 	--Inserto datos en tabla tipo_caja
 
-        INSERT INTO new_data.tipo_caja
+        	INSERT INTO new_data.tipo_caja
 		SELECT DISTINCT TIPO_CAJA_CODIGO, TIPO_CAJA_DESC
 		FROM gd_esquema.Maestra
 		WHERE TIPO_CAJA_CODIGO IS NOT NULL
 		
 	--Inserto datos en tabla tipo_auto
 
-        INSERT INTO new_data.tipo_auto
+        	INSERT INTO new_data.tipo_auto
 		SELECT DISTINCT TIPO_AUTO_CODIGO, TIPO_AUTO_DESC
 		FROM gd_esquema.Maestra
 		WHERE TIPO_AUTO_CODIGO IS NOT NULL
 		
 	--Inserto datos en tabla tipo_transmision
 
-        INSERT INTO new_data.tipo_transmision
+        	INSERT INTO new_data.tipo_transmision
 		SELECT DISTINCT TIPO_TRANSMISION_CODIGO, TIPO_TRANSMISION_DESC
 		FROM gd_esquema.Maestra
 		WHERE TIPO_TRANSMISION_CODIGO IS NOT NULL
@@ -227,8 +227,8 @@ AS
 
 		INSERT INTO new_data.modelo
 		SELECT DISTINCT MODELO_CODIGO, MODELO_NOMBRE, MODELO_POTENCIA, new_data.tipo_motor.tipo_motor_codigo,
-						new_data.tipo_caja.tipo_caja_codigo, new_data.tipo_auto.tipo_auto_codigo,
-						new_data.tipo_transmision.tipo_transmision_codigo
+				new_data.tipo_caja.tipo_caja_codigo, new_data.tipo_auto.tipo_auto_codigo,
+				new_data.tipo_transmision.tipo_transmision_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.tipo_motor ON Maestra.TIPO_MOTOR_CODIGO = new_data.tipo_motor.tipo_motor_codigo
 			JOIN new_data.tipo_caja ON Maestra.TIPO_CAJA_CODIGO = new_data.tipo_caja.tipo_caja_codigo
@@ -246,8 +246,8 @@ AS
 	--Inserto datos en tabla automovil
 
 		INSERT INTO new_data.automovil
-		SELECT DISTINCT AUTO_PATENTE, AUTO_NRO_CHASIS, AUTO_NRO_MOTOR, AUTO_FECHA_ALTA, AUTO_CANT_KMS,
-						new_data.modelo.modelo_codigo, new_data.fabricante.fabricante_codigo
+		SELECT DISTINCT AUTO_PATENTE, AUTO_NRO_CHASIS, AUTO_NRO_MOTOR, AUTO_FECHA_ALTA, AUTO_CANT_KMS, new_data.modelo.modelo_codigo,
+				new_data.fabricante.fabricante_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.modelo ON Maestra.MODELO_CODIGO = new_data.modelo.modelo_codigo
 			JOIN new_data.fabricante ON Maestra.FABRICANTE_NOMBRE = new_data.fabricante.fabricante_nombre
@@ -255,7 +255,7 @@ AS
 		
 	--Inserto datos en tabla auto_parte
 
-        INSERT INTO new_data.auto_parte
+        	INSERT INTO new_data.auto_parte
 		SELECT DISTINCT AUTO_PARTE_CODIGO, AUTO_PARTE_DESCRIPCION, new_data.modelo.modelo_codigo, fabricante_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.modelo ON Maestra.MODELO_CODIGO = modelo.modelo_codigo
@@ -273,18 +273,18 @@ AS
 
 		INSERT INTO new_data.compra_automovil
 		SELECT DISTINCT COMPRA_NRO, COMPRA_FECHA, COMPRA_PRECIO, COMPRA_CANT, new_data.automovil.auto_codigo,
-						new_data.sucursal.sucursal_codigo
+				new_data.sucursal.sucursal_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.automovil ON Maestra.AUTO_PATENTE = new_data.automovil.auto_patente
 			JOIN new_data.sucursal ON Maestra.SUCURSAL_DIRECCION = new_data.sucursal.sucursal_direccion
-        WHERE Maestra.COMPRA_NRO IS NOT NULL
+        	WHERE Maestra.COMPRA_NRO IS NOT NULL
 
 				
 	--Inserto datos en tabla compra_auto_parte
 
 		INSERT INTO new_data.compra_auto_parte
 		SELECT DISTINCT COMPRA_NRO, COMPRA_FECHA, COMPRA_PRECIO, COMPRA_CANT, new_data.auto_parte.auto_parte_codigo,
-						new_data.sucursal.sucursal_codigo
+				new_data.sucursal.sucursal_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.auto_parte ON Maestra.AUTO_PARTE_CODIGO = new_data.auto_parte.auto_parte_codigo
 			JOIN new_data.sucursal ON Maestra.SUCURSAL_DIRECCION = new_data.sucursal.sucursal_direccion
@@ -294,7 +294,7 @@ AS
 
 		INSERT INTO new_data.factura_automovil
 		SELECT DISTINCT FACTURA_NRO, FACTURA_FECHA, PRECIO_FACTURADO, CANT_FACTURADA, new_data.cliente.cliente_codigo,
-						new_data.automovil.auto_codigo, new_data.sucursal.sucursal_codigo
+				new_data.automovil.auto_codigo, new_data.sucursal.sucursal_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.cliente ON Maestra.FAC_CLIENTE_DNI = new_data.cliente.cliente_DNI
 			JOIN new_data.automovil ON Maestra.AUTO_PATENTE = new_data.automovil.auto_patente
@@ -305,7 +305,7 @@ AS
 		
 		INSERT INTO new_data.factura_auto_parte
 		SELECT DISTINCT FACTURA_NRO, FACTURA_FECHA, PRECIO_FACTURADO, CANT_FACTURADA, new_data.cliente.cliente_codigo,
-						new_data.auto_parte.auto_parte_codigo, new_data.sucursal.sucursal_codigo
+				new_data.auto_parte.auto_parte_codigo, new_data.sucursal.sucursal_codigo
 		FROM gd_esquema.Maestra
 			JOIN new_data.cliente ON Maestra.FAC_CLIENTE_DNI = new_data.cliente.cliente_DNI
 			JOIN new_data.auto_parte ON Maestra.AUTO_PARTE_CODIGO = new_data.auto_parte.auto_parte_codigo

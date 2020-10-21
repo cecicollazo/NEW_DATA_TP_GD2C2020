@@ -12,4 +12,4 @@
 ## DER
  https://lucid.app/invitations/accept/9c62bf8d-e9f4-48ab-abd6-c6620952150f
  
- ![alt tag](/data/TP GDD_NEW_DATA(DER).png)
+ ![alt tag](https://github.com/cecicollazo/NEW_DATA_TP_GD2C2020/blob/main/TP%20GDD_%20NEW_DATA%20(DER).png)
